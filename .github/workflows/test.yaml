@@ -6,10 +6,12 @@ jobs:
     runs-on: ubuntu-22.04
   
   steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
     - name: Extract environment variables
       id: vars
-      run: 
-        echo "VAR1=foo" >> $GITHUB_ENV
+      run: echo "VAR1=foo" >> $GITHUB_ENV
 
     - name : ssh
       uses: appleboy/ssh-action@v1.2.0

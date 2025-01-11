@@ -22,6 +22,6 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
           envs: API_KEY
-        script: |
-          echo $API_KEY
-          echo "Hello World"
+          script: |
+            echo $API_KEY
+            echo "Hello World"

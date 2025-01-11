@@ -1,26 +1,27 @@
 on:
-  workflow_dispatch
+  push:
+    branches:
+      - main
 
 jobs:
-  example-job:
-    runs-on: ubuntu-22.04
-  
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
-    - name: Extract environment variables
-      id: vars
-      run: echo "VAR1=foo" >> $GITHUB_ENV
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v2
+      
+      - name: add env var
+        run: echo "API_KEY=123" >> $GITHUB_ENV
 
-    - name : ssh
-      uses: appleboy/ssh-action@v1.2.0
-      envs:
-        VAR1: ${{ steps.vars.outputs.VAR1 }}
-      with:
+      - name: ssh
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          API_KEY=$API_KEY
+        with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           password: ${{ secrets.VPS_PASSWORD }}
-          envs: VAR1
-          run: echo "var1 is $VAR1"
-
+          envs: API_KEY
+        script: |
+          echo $API_KEY
+          echo "Hello World"
